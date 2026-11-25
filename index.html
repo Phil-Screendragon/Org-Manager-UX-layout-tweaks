@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Org Manager wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --surface-default: #FFFFFF;
+  --surface-subtle: #FAF9F8;
+  --surface-muted: #F3F2F1;
+  --border-default: #ECEAE9;
+  --border-emphasis: #D6D1CE;
+  --text-default: #261E1B;
+  --text-subtle: #6E6460;
+  --text-faint: #8A807D;
+  --primary: #0B6E8A;
+  --primary-hover: #095C73;
+  --primary-pressed: #074B5E;
+  --primary-subtle: #E6F3F7;
+  --primary-muted: #B8DDE8;
+  --on-primary: #FFFFFF;
+  --active-bg: #E8F5EC;
+  --active-border: #3E9B63;
+  --active-fg: #1F6B3E;
+  --error: #C93545;
+  --error-hover: #B22D3C;
+  --on-error: #FFFFFF;
+  --nav-bg: #261E1B;
+  --brand: #006B5C;
+  --brand-on-nav: #3DBFA6;
+  --nav-fg: #CFC7C3;
+  --proto-bg: #F3F2F1;
+  --bar: rgba(38, 30, 27, 0.12);
+  --shadow-lg: 0 12px 32px rgba(38, 30, 27, 0.16);
+  --scrim: rgba(38, 30, 27, 0.4);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-default: #1C1715;
+    --surface-subtle: #221C1A;
+    --surface-muted: #2C2522;
+    --border-default: #3A312E;
+    --border-emphasis: #52463F;
+    --text-default: #F2EEEC;
+    --text-subtle: #B3A8A3;
+    --text-faint: #8F847F;
+    --primary: #4FB3D1;
+    --primary-hover: #6CC3DD;
+    --primary-pressed: #86CFE4;
+    --primary-subtle: rgba(79, 179, 209, 0.14);
+    --primary-muted: rgba(79, 179, 209, 0.32);
+    --on-primary: #0E1A1F;
+    --active-bg: rgba(76, 175, 112, 0.14);
+    --active-border: #4CAF70;
+    --active-fg: #8DDBA8;
+    --error: #E5677A;
+    --error-hover: #EE8494;
+    --on-error: #1C0E10;
+    --nav-bg: #120E0D;
+    --brand: #1F8C78;
+    --nav-fg: #B3A8A3;
+    --proto-bg: #151110;
+    --bar: rgba(242, 238, 236, 0.14);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+    --scrim: rgba(0, 0, 0, 0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --surface-default: #1C1715;
+  --surface-subtle: #221C1A;
+  --surface-muted: #2C2522;
+  --border-default: #3A312E;
+  --border-emphasis: #52463F;
+  --text-default: #F2EEEC;
+  --text-subtle: #B3A8A3;
+  --text-faint: #8F847F;
+  --primary: #4FB3D1;
+  --primary-hover: #6CC3DD;
+  --primary-pressed: #86CFE4;
+  --primary-subtle: rgba(79, 179, 209, 0.14);
+  --primary-muted: rgba(79, 179, 209, 0.32);
+  --on-primary: #0E1A1F;
+  --active-bg: rgba(76, 175, 112, 0.14);
+  --active-border: #4CAF70;
+  --active-fg: #8DDBA8;
+  --error: #E5677A;
+  --error-hover: #EE8494;
+  --on-error: #1C0E10;
+  --nav-bg: #120E0D;
+  --brand: #1F8C78;
+  --nav-fg: #B3A8A3;
+  --proto-bg: #151110;
+  --bar: rgba(242, 238, 236, 0.14);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--text-default);
+  background: var(--surface-default);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--proto-bg); }
+button, input { font: inherit; color: inherit; }
+a { color: var(--primary); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Prototype chrome — deliberately separate from the product UI */
+.proto-bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  min-height: 48px; padding: 8px 16px;
+  background: var(--proto-bg);
+  border-bottom: 1px solid var(--border-default);
+}
+.proto-title { font-size: 13px; font-weight: 600; margin-right: 8px; white-space: nowrap; }
+.seg { display: inline-flex; padding: 2px; gap: 2px; border-radius: 8px; background: var(--surface-muted); border: 1px solid var(--border-default); }
+.seg button, .seg a {
+  height: 28px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent;
+  font-size: 13px; font-weight: 500; color: var(--text-subtle); cursor: pointer;
+  display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap;
+}
+.seg button:hover, .seg a:hover { color: var(--text-default); }
+.seg [aria-current="page"], .seg [aria-pressed="true"] { background: var(--surface-default); color: var(--text-default); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.proto-right { margin-left: auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+/* App shell */
+.app { display: grid; grid-template-columns: 56px minmax(0, 1fr); min-height: calc(100vh - 48px); }
+.rail {
+  background: var(--nav-bg); color: var(--nav-fg);
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0;
+}
+.rail .mark { width: 32px; height: 32px; border-radius: 8px; background: var(--brand); color: #FFFFFF; display: grid; place-items: center; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+.rail .ri { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; color: inherit; }
+.rail .ri.on { background: rgba(255,255,255,0.08); color: #FFFFFF; box-shadow: inset 2px 0 0 var(--brand-on-nav); }
+.rail .spacer { flex: 1; }
+main { min-width: 0; padding: 20px clamp(16px, 3vw, 40px) 48px; }
+.page { width: 100%; }
+
+/* Buttons — Scale tiers */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 32px; padding: 0 12px; border-radius: 6px; border: 1px solid transparent;
+  background: transparent; font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-primary:active { background: var(--primary-pressed); }
+.btn-tertiary { color: var(--primary); }
+.btn-tertiary:hover { background: var(--surface-muted); }
+.btn-ghost { color: var(--text-subtle); }
+.btn-ghost:hover { background: var(--surface-muted); color: var(--text-default); }
+.btn-destructive { background: var(--error); color: var(--on-error); }
+.btn-destructive:hover { background: var(--error-hover); }
+.btn[disabled] { opacity: 0.45; pointer-events: none; }
+.icon-btn { width: 24px; height: 24px; padding: 0; border-radius: 4px; flex: none; }
+.chev svg { transition: transform 150ms ease; }
+.chev[aria-expanded="true"] svg { transform: rotate(90deg); }
+.slot { width: 24px; height: 24px; flex: none; }
+
+/* Badge */
+.badge-active {
+  display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px;
+  border-radius: 999px; font-size: 12px; font-weight: 500;
+  background: var(--active-bg); border: 1px solid var(--active-border); color: var(--active-fg);
+}
+
+/* Page header */
+.crumbs ol { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--text-subtle); }
+.crumbs li + li::before { content: "/"; margin-right: 4px; color: var(--text-faint); }
+.crumbs a { color: var(--text-subtle); text-decoration: none; }
+.crumbs a:hover { color: var(--primary); text-decoration: underline; }
+.crumbs [aria-current] { color: var(--text-default); }
+.ph-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.ph-head h1 { font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+.back { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border-emphasis); }
+
+/* Tabs */
+.tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.tab {
+  position: relative; height: 40px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-size: 14px; font-weight: 500; color: var(--text-subtle);
+}
+.tab:hover { color: var(--text-default); }
+.tab[aria-selected="true"] { color: var(--text-default); font-weight: 600; }
+.tab .count { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; margin-left: 6px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--surface-muted); color: var(--text-subtle); }
+.tab[aria-selected="true"] .count { background: var(--primary-subtle); color: var(--primary); }
+.tab[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--primary); }
+
+/* Toolbar */
+.toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; min-height: 32px; }
+.toolbar .end { margin-left: auto; display: flex; gap: 8px; }
+
+/* Search input */
+.search { position: relative; width: 320px; max-width: 100%; margin-bottom: 16px; }
+.search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-subtle); pointer-events: none; }
+.search input {
+  width: 100%; height: 40px; padding: 0 12px 0 36px; border-radius: 6px;
+  border: 1px solid var(--border-emphasis); background: var(--surface-default);
+}
+.search input::placeholder { color: var(--text-faint); }
+.search input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-subtle); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border-default); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; min-width: 640px; }
+th {
+  text-align: left; font-size: 12px; font-weight: 600; color: var(--text-subtle);
+  background: var(--surface-muted); height: 32px; padding: 0 12px; white-space: nowrap;
+}
+td { height: 40px; padding: 0 12px; border-top: 1px solid var(--border-default); vertical-align: middle; }
+td.muted { color: var(--text-subtle); white-space: nowrap; }
+.name-cell { display: flex; align-items: center; min-width: 0; }
+.name-cell .name, .name-cell .name-link { margin-left: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.name-link { color: inherit; text-decoration: none; }
+.name-link:hover { color: var(--primary); text-decoration: underline; }
+.avatar {
+  width: 24px; height: 24px; border-radius: 50%; margin-left: 4px; flex: none;
+  background: var(--surface-muted); color: var(--text-subtle); border: 1px solid var(--border-default);
+  display: grid; place-items: center; font-size: 10px; font-weight: 600;
+}
+.avatar + .name, .avatar + .name-link { margin-left: 8px; }
+.avatar.person { width: 28px; height: 28px; font-size: 11px; border: 0; color: #FFFFFF; background: var(--av); }
+.as-today { font-size: 12px; color: var(--text-faint); padding: 8px 0; }
+.empty { padding: 32px 12px; text-align: center; color: var(--text-subtle); }
+tbody tr:hover > td { background: var(--surface-subtle); }
+tr.is-open > td { background: var(--surface-subtle); }
+tr.is-open > td:first-child { box-shadow: inset 2px 0 0 var(--primary); }
+tr.detail > td { border-top: 0; height: auto; padding: 0 12px 16px 48px; }
+.desc { max-width: clamp(160px, 26vw, 520px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-subtle); }
+td.num { white-space: nowrap; }
+td.num.zero { color: var(--text-faint); }
+td.act { width: 48px; text-align: right; }
+.del { opacity: 0; color: var(--text-subtle); }
+tr:hover .del, tr:focus-within .del { opacity: 1; }
+.del:hover { color: var(--error); background: var(--surface-muted); }
+@media (hover: none) { .del { opacity: 1; } }
+.bar { display: inline-block; height: 8px; border-radius: 4px; background: var(--bar); vertical-align: middle; }
+.foot { font-size: 12px; color: var(--text-faint); margin-top: 12px; }
+
+/* Tag groups and chips */
+.group { border-left: 2px solid var(--primary-muted); padding: 8px 0 8px 16px; }
+.group + .group { margin-top: 8px; }
+.group-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.group-name { font-weight: 600; font-size: 13px; }
+.group-count { font-size: 12px; color: var(--text-subtle); }
+.switch-btn {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 8px; border: 0; background: none;
+  font-size: 12px; cursor: pointer; padding: 2px 0; color: var(--text-default);
+}
+.track { width: 32px; height: 18px; border-radius: 9px; border: 1px solid var(--border-emphasis); position: relative; transition: background 150ms; background: var(--surface-muted); }
+.knob { position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--text-faint); transition: transform 150ms; }
+.switch-btn[aria-checked="true"] .track { background: var(--primary); border-color: var(--primary); }
+.switch-btn[aria-checked="true"] .knob { transform: translateX(14px); background: var(--on-primary); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  height: 24px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--primary-muted);
+  background: transparent; font-size: 12px; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px; color: var(--primary);
+}
+.chip:hover { border-color: var(--primary); }
+.chip[aria-pressed="true"] { background: var(--primary-subtle); border-color: var(--primary); font-weight: 600; }
+.chip .ph { display: block; width: 56px; height: 6px; border-radius: 3px; background: currentColor; opacity: 0.25; }
+
+/* Sub-organisations */
+.subs { border: 1px solid var(--border-default); border-radius: 8px; overflow: hidden; }
+.sub + .sub { border-top: 1px solid var(--border-default); }
+.sub-head {
+  width: 100%; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 12px;
+  border: 0; background: none; cursor: pointer; text-align: left; flex-wrap: wrap;
+}
+.sub-head:hover { background: var(--surface-subtle); }
+.sub-head[aria-expanded="true"] { box-shadow: inset 2px 0 0 var(--primary); }
+.sub-head .chev-i { width: 24px; height: 24px; display: grid; place-items: center; color: var(--text-subtle); }
+.sub-head .chev-i svg { transition: transform 150ms ease; }
+.sub-head[aria-expanded="true"] .chev-i svg { transform: rotate(90deg); }
+.sub-name { font-weight: 600; }
+.sub-meta { font-size: 12px; color: var(--text-subtle); }
+.sub-body { padding: 0 12px 16px 44px; }
+.sub-body .table-wrap { border-radius: 6px; }
+
+/* Notes drawer */
+.notes {
+  position: fixed; right: 0; top: calc(48px + env(safe-area-inset-top, 0px)); bottom: 0; width: 340px; max-width: 100%;
+  background: var(--surface-default); border-left: 1px solid var(--border-default); box-shadow: var(--shadow-lg);
+  padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; z-index: 15;
+  transform: translateX(105%); transition: transform 200ms ease; visibility: hidden;
+}
+.notes.open { transform: none; visibility: visible; }
+.notes h2 { font-size: 15px; margin: 0 0 4px; }
+.notes .sub-t { font-size: 12px; color: var(--text-subtle); margin: 0 0 16px; }
+.notes ol { margin: 0; padding-left: 20px; display: grid; gap: 12px; }
+.notes li { font-size: 13px; line-height: 1.5; }
+.notes .close { position: absolute; top: 14px; right: 14px; }
+.notes .foot { border-top: 1px solid var(--border-default); padding-top: 12px; margin-top: 20px; }
+
+/* Dialog and toast */
+dialog {
+  border: 0; border-radius: 8px; padding: 24px; width: min(440px, calc(100vw - 32px));
+  background: var(--surface-default); color: var(--text-default); box-shadow: var(--shadow-lg);
+}
+dialog::backdrop { background: var(--scrim); }
+dialog h2 { font-size: 16px; margin: 0 0 8px; }
+dialog p { margin: 0 0 20px; color: var(--text-subtle); }
+dialog .row { display: flex; justify-content: flex-end; gap: 8px; }
+.toasts { position: fixed; top: calc(60px + env(safe-area-inset-top, 0px)); right: 16px; display: grid; gap: 8px; z-index: 30; }
+.toast {
+  padding: 10px 14px; border-radius: 6px; font-size: 13px; max-width: 320px;
+  background: var(--primary-subtle); border: 1px solid var(--primary); color: var(--text-default);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tree table: indent grid, guides, path bar */
+.tree-table { table-layout: fixed; }
+td.tree-cell { position: relative; }
+.guide { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border-emphasis); pointer-events: none; }
+.guide.hl { background: var(--primary); width: 2px; transform: translateX(-0.5px); }
+.ill { font-style: italic; color: var(--text-subtle); }
+.ill-tag { display: inline-flex; align-items: center; height: 16px; padding: 0 6px; margin-left: 8px; border-radius: 999px; border: 1px dashed var(--border-emphasis); font-size: 10px; color: var(--text-faint); white-space: nowrap; flex: none; }
+.kids { flex: none; }
+.row-meta { margin-left: 10px; font-size: 12px; color: var(--text-subtle); white-space: nowrap; flex: none; }
+.name.faint { color: var(--text-faint); }
+tr.sub-row > td { height: 36px; }
+tr.sub-row .name { font-size: 13px; }
+tr.chip-row > td { height: auto; border-top: 0; background: var(--surface-subtle); }
+tr.org-row.is-open > td:first-child, tr.sub-row.is-open > td:first-child { box-shadow: none; }
+.chev[disabled] { opacity: 0.3; }
+.acc-btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 8px; margin-left: -8px; border: 0; border-radius: 6px; background: none; cursor: pointer; font-size: 14px; white-space: nowrap; }
+.acc-btn:hover { background: var(--surface-muted); }
+.acc-btn svg { transition: transform 150ms ease; color: var(--text-subtle); }
+.acc-btn[aria-expanded="true"] { color: var(--primary); }
+.acc-btn[aria-expanded="true"] svg { transform: rotate(180deg); color: var(--primary); }
+.zero .acc-btn { color: var(--text-faint); }
+.pathbar-wrap { position: sticky; top: var(--stick, 48px); height: 0; z-index: 6; }
+.pathbar { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; min-height: 36px; padding: 6px 12px; background: var(--surface-default); border: 1px solid var(--border-default); border-radius: 0 0 8px 8px; box-shadow: var(--shadow-lg); font-size: 12px; }
+.pathbar[hidden] { display: none; }
+.pb-k { color: var(--text-faint); margin-right: 4px; }
+.pb-seg { border: 0; background: none; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: 500; color: var(--primary); cursor: pointer; }
+.pb-seg:hover { background: var(--primary-subtle); }
+.pb-sep { color: var(--text-faint); }
+
+/* Meta Manager wizard */
+.btn-secondary { color: var(--primary); border-color: var(--primary); }
+.btn-secondary:hover { background: var(--primary-subtle); }
+.wiz-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.wiz-head h1 { font-size: 20px; font-weight: 600; margin: 0 auto 0 0; }
+.stepper { list-style: none; margin: 0 0 24px; padding: 0 0 20px; display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border-default); position: relative; }
+.stepper::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 15px; height: 1px; background: var(--border-default); }
+.stepper li { display: grid; justify-items: center; gap: 8px; font-size: 12px; color: var(--text-subtle); position: relative; text-align: center; }
+.stepper .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--surface-default); border: 1px solid var(--border-emphasis); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+.stepper [aria-current="step"] { color: var(--text-default); font-weight: 600; }
+.stepper [aria-current="step"] .dot { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.mtoolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.mtoolbar .search { margin: 0 auto 0 0; }
+.kids { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; margin-left: 8px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--surface-muted); color: var(--text-subtle); }
+.meta-table td.acc { white-space: nowrap; }
+.meta-table td.dsc { color: var(--text-subtle); }
+.meta-table .dsc div { max-width: clamp(140px, 28vw, 520px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Brief */
+.brief { max-width: 78ch; }
+.brief h1 { font-size: 24px; line-height: 1.25; letter-spacing: -0.015em; margin: 0 0 4px; }
+.brief-meta { color: var(--text-subtle); font-size: 13px; margin: 0 0 24px; }
+.brief h2 { font-size: 17px; margin: 40px 0 12px; padding-top: 20px; border-top: 1px solid var(--border-default); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.brief h3 { font-size: 14px; margin: 28px 0 8px; }
+.brief p, .brief li { line-height: 1.6; }
+.brief p { margin: 0 0 12px; }
+.brief ul, .brief ol { margin: 0 0 16px; padding-left: 20px; display: grid; gap: 6px; }
+.brief code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; background: var(--surface-muted); border-radius: 4px; padding: 1px 5px; }
+.brief .see { font-size: 12px; font-weight: 500; text-decoration: none; }
+.brief .see:hover { text-decoration: underline; }
+.brief .table-wrap { margin: 4px 0 16px; }
+.brief-table { min-width: 0; font-size: 13px; }
+.brief-table td { height: auto; padding: 8px 12px; vertical-align: top; }
+.brief-note { color: var(--text-subtle); font-size: 13px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+@media (max-width: 720px) {
+  main { padding: 16px 16px 40px; }
+  .app { grid-template-columns: 44px minmax(0, 1fr); }
+  .rail .mark { width: 28px; height: 28px; }
+  .proto-right { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="proto-bar">
+  <span class="proto-title">Org Manager wireframes</span>
+  <nav class="seg" aria-label="Screens">
+    <a href="#brief" data-view="brief">Brief</a>
+    <a href="#list" data-view="list">List view</a>
+    <a href="#branding" data-view="branding">Detail view</a>
+    <a href="#fmarc" data-view="fmarc">Sub-organisations</a>
+    <a href="#adidas" data-view="adidas">Users</a>
+    <a href="#meta" data-view="meta">Meta Manager</a>
+  </nav>
+  <div class="proto-right">
+    <div class="seg" role="group" aria-label="Theme">
+      <button type="button" data-theme-set="auto">Auto</button>
+      <button type="button" data-theme-set="light">Light</button>
+      <button type="button" data-theme-set="dark">Dark</button>
+    </div>
+    <div class="seg"><button type="button" id="notesBtn" aria-pressed="false" aria-controls="notes">What changed</button></div>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="rail" aria-label="Product">
+    <div class="mark" aria-hidden="true">SD</div>
+    <a class="ri" href="#list" aria-label="Home"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 8l6-5 6 5v7H11v-4H7v4H3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></a>
+    <a class="ri on" href="#list" aria-label="Company Manager" aria-current="page"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <span class="spacer"></span>
+    <span class="ri" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 12V8a4 4 0 018 0v4l1 1.5H4zM7.5 15.5h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+    <span class="ri" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2M4 4l1.4 1.4M12.6 12.6L14 14M4 14l1.4-1.4M12.6 5.4L14 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+  </nav>
+  <main id="main"><div class="page" id="page"></div></main>
+</div>
+
+<aside class="notes" id="notes" aria-labelledby="notesTitle">
+  <button class="btn btn-ghost icon-btn close" type="button" id="notesClose" aria-label="Close">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <h2 id="notesTitle">What changed on this screen</h2>
+  <p class="sub-t">Design tweaks only. Data and behaviour are as today.</p>
+  <ol id="notesList"></ol>
+  <p class="foot">This prototype shows 6 of 26 events. Grey bars stand in for data the current screenshots don’t show.</p>
+</aside>
+
+<dialog id="confirm" aria-labelledby="confirmTitle">
+  <h2 id="confirmTitle"></h2>
+  <p id="confirmBody">The delete action behaves as it does today. In this prototype it only removes the row.</p>
+  <div class="row">
+    <button class="btn btn-ghost" type="button" id="confirmCancel">Cancel</button>
+    <button class="btn btn-destructive" type="button" id="confirmOk">Delete</button>
+  </div>
+</dialog>
+<template id="briefTpl">
+<article class="brief">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol><li aria-current="page">Brief</li></ol></nav>
+  <h1>Org Manager: UX tweaks and Scale v1.3 additions</h1>
+  <p class="brief-meta">Phil Keogh, 25 Nov 2026</p>
+
+  <h2>The point</h2>
+  <p>Org Manager answers one question for an admin: who can see what. Right now that answer is buried under a redundant Status column, four different expand controls, stat cards that hide the fact they’re tabs, and labels repeated on every event card.</p>
+  <p>Scope is design tweaks only. Every change re-presents data and controls the screens already have; nothing adds data, logic or behaviour. Tag gating stays as designed: a child sees only the tags its parent grants, and the rest are hidden on purpose.</p>
+  <p>The recommendation has four moves. Make the list view one consistent tree table, and drop status from Org Manager entirely. Turn the detail view’s stat cards into tabs, including the new Users tab, and the event and user cards into single tables. Give tag chips one clear selected/unselected treatment in their one default colour, including nested sub-orgs. Use Scale colour only where it carries meaning, on a layout that runs full width.</p>
+  <p>All of it composes from existing Scale parts except two: a Tree Table pattern and a Selectable Tag Chip. Both are proposed for Scale v1.3 below.</p>
+  <p class="brief-note">Screens reviewed: Active Companies list, FIFA Branding Team detail, FIFA F-Marc_Medical Centres of Excellence sub-org view (FIFA tenant, dark theme).</p>
+
+  <h2>1. List view (Active Companies) <a class="see" href="#list">See the screen</a></h2>
+  <p><strong>Remove status, everywhere.</strong> The page is scoped to Active Companies, so every row is Active by definition. The column stays redundant even once orgs get deactivated, because they won’t appear on this page. The same logic removes the Active badge from the detail header and from sub-organisation rows: Org Manager shows no status at all.</p>
+  <p><strong>Unify the tree, and make it hold at any depth.</strong> The screen uses four disclosure affordances: a bare chevron (top level), a boxed chevron (expanded), a filled minus box (expanded child) and a plus box (collapsed child). Row heights drift between 42px and 37px. Organisations can nest many levels deep, so the tree needs one geometry that never breaks:</p>
+  <ul>
+    <li>Every chevron is on the left, a Ghost icon button xs (24px) at the row’s own indent. Nothing opens from the right. Leaf rows keep an empty 24px slot so names stay aligned.</li>
+    <li>Indent 16px per level (<code>--spacing-4</code>), the same step everywhere. In Meta Manager each organisation level takes two tree levels, so a tight step keeps deep names readable.</li>
+    <li>A 1px guide (<code>--border-emphasis</code>) runs down from each open parent’s chevron through its descendants. Hovering or focusing a row turns its parent’s guide Cerulean, so siblings read as a set at any level.</li>
+    <li>No level cap. Names truncate before the next column with the full path in a tooltip; every other column is fixed width, so nothing to the right shifts with depth.</li>
+    <li>When an open parent scrolls off screen, a path bar pins under the toolbar (“Inside Commercial Partner / adidas”). Each segment jumps back to its row.</li>
+    <li>All rows 40px. Arrow keys work as a treegrid: → opens, ← closes or moves to the parent, ↑↓ move between rows.</li>
+  </ul>
+  <p><strong>Show the leaf name, not the path.</strong> “FIFA F-Marc_Medical Centres of Excellence: FMClinicoE only” sitting under its own parent repeats 42 characters the indent already conveys. Display “FMClinicoE only” with the full name in a tooltip. The stored name and filtering are unchanged.</p>
+  <p><strong>Left-align the columns.</strong> Keep Name, Last modified by and Last modified date. The centred by/date columns break the scan line; left-align them and give the width freed by Status to Name.</p>
+  <p><strong>Drop org avatars from the tree.</strong> The hashed rainbow carries no meaning and is the loudest thing on the page. A neutral avatar on top-level rows only still pushes those names out of the indent grid, breaking the chevron-under-name rule, so the tree shows none. Scale’s hash palette stays for people.</p>
+
+  <h2>2. Detail view (org page, Events) <a class="see" href="#branding">See the screen</a></h2>
+  <p><strong>The stat cards are tabs pretending to be KPIs. Make them tabs.</strong> “26 Events” and “2 Sub Organisations” already switch the body content, with the active card’s icon lit. Two half-width cards spend about 85px on two numbers and hide that they’re navigation. Replace with Scale Tabs carrying the same counts in a neutral count badge: Events, Users, Sub-organisations. The active tab’s badge turns Cerulean.</p>
+  <p><strong>Fix the breadcrumb.</strong> On the detail page it still reads “Home / Company Manager - Active Companies” and mixes “/” and “-”. Show the current org with “/” throughout: Home / Active Companies / FIFA / FIFA Branding Team. The back button can stay.</p>
+  <p><strong>One table, not 26 cards.</strong> Every event card repeats “EVENT NAME / DATE / DESCRIPTION”. At 26 events that’s 78 repeated labels and roughly three times the scroll. Convert to a DataTable with one sticky header:</p>
+  <div class="table-wrap"><table class="brief-table"><thead><tr><th>Column</th><th>Content</th></tr></thead><tbody>
+    <tr><td>Event</td><td>Chevron + name</td></tr>
+    <tr><td>Dates</td><td>As today</td></tr>
+    <tr><td>Description</td><td>As today, truncated to one line with full text in a tooltip</td></tr>
+    <tr><td>Access</td><td>The existing count, as “7 selected”</td></tr>
+    <tr><td>(action)</td><td>Delete icon, revealed on row hover</td></tr>
+  </tbody></table></div>
+  <p>Expanding a row reveals its tag groups (“Type of Mark”) and chips beneath, inside the row, exactly as today.</p>
+  <p><strong>Fix the count.</strong> The “7” in a box before “FIFA Corporate Identity” reads as an ID or a sort index. Same number, moved to the Access column with its noun: “7 selected”. Group-level counts follow the same format.</p>
+  <p><strong>Quieten the delete icon.</strong> It sits at full weight on every card, always visible. Make it a Ghost icon button revealed on row hover, per Scale Tier 4. Behaviour and confirmation stay as they are; whether it should read as red depends on what it deletes (section 6).</p>
+  <p><strong>Toolbar hierarchy.</strong> “Add Event” as Primary at far right is correct. “Collapse All” is a view control, so it drops from Secondary (outlined) to Tertiary. The per-group “Show Selected Only” eye-slash icon doesn’t show whether it’s on; render it as a Scale Switch labelled “Selected only”, in the same place with the same scope.</p>
+  <p><strong>Selected vs unselected chips.</strong> Selected chips need to look selected. Tags have one default colour, so selection changes fill and weight, never hue. Selected = <code>--primary-subtle</code> fill + <code>--primary-default</code> border + check; unselected = transparent + <code>--primary-muted</code> border in the same text colour, no check. “None” takes the same states as every other chip.</p>
+
+  <h3>Users tab (new) <a class="see" href="#adidas">See the screen</a></h3>
+  <p><strong>A third tab.</strong> Users joins Events and Sub-organisations as a stat card, so it becomes the third tab, in card order: Events, Users, Sub-organisations, each with its count badge.</p>
+  <p><strong>One table, not a stack of cards.</strong> Today each user sits in its own bordered card, the same card pattern as events. Make it a single-column table under the tab: avatar + full name in 40px rows, with the same header, borders and hover as the event and org tables. Drop the “Users” heading above the list; the active tab already says it.</p>
+  <p><strong>People keep their avatar colour.</strong> Unlike organisations, users keep Scale’s hash-deterministic avatar palette (3.13). The same person gets the same colour everywhere, which is what the palette is for.</p>
+  <p><strong>Only what’s there today.</strong> Name and avatar. No columns, actions or sorting are added. At 0 users the tab stays visible with a one-line empty state, as Sub-organisations does.</p>
+
+  <h2>3. Sub-organisation view: same table, nested <a class="see" href="#fmarc">See the screen</a></h2>
+  <p>Tag gating stays exactly as designed: a child sees only the tags its parent grants, and hiding the rest is intentional. That matches the register’s rule that rights-locked leaf options hide rather than disable. The tweaks below are presentation only.</p>
+  <p><strong>Reuse the detail table.</strong> Each child is a row (name and permissions meta, no status badge) that expands into the same event table as the detail view, indented one level. Today the nested view uses a different layout from the parent’s own event list, so admins learn two.</p>
+  <p><strong>Trailing counts.</strong> The “0” pills after each event become “0 selected” in the Access column, matching the detail view.</p>
+  <p><strong>Same chips.</strong> An expanded group shows the chips the parent grants, which here is only “None”, in the standard chip states.</p>
+  <p><strong>Quieter metadata.</strong> “Permissions: Inherit” moves into <code>--text-subtle</code> meta beside the child’s name rather than a second line competing with it. What the label should say is an open question (section 6).</p>
+  <p><strong>Drop the avatar.</strong> “FO” is the initials of “FIFA F-Marc…”. Every FIFA org starts with FIFA, so path-derived initials converge. Below the top level, the indent and breadcrumb already identify the org.</p>
+
+  <h2>4. Meta Manager: Organisation Rights, the folder view <a class="see" href="#meta">See the screen</a></h2>
+  <p>This is the same data as Org Manager, seen the other way round. Org Manager shows one organisation and the event folders it can use. The Organisation Rights step of an event folder’s Manage wizard shows one folder and the organisations that can use it. It should read as the same table turned inside out, not as a second design.</p>
+  <p><strong>Why it’s hard to read today:</strong></p>
+  <ul>
+    <li>Every organisation is a card that repeats “GROUP NAME” and “DESCRIPTION”. With 30+ organisations that’s 60+ repeated labels.</li>
+    <li>Selected and unselected chips differ only by a teal or grey outline, so “27 of 28” and “13 of 28” look almost the same at a glance.</li>
+    <li>Hierarchy is invisible. Children sit at their parent’s indent below a “34 Sub Organisations” link, and “adidas: Users” lines up with adidas itself.</li>
+    <li>Each organisation has two disclosure controls in two places: a gutter chevron for its tags and an inline “N Sub Organisations” link for its children. The gutter chevron stays at the same x at every depth, so no chevron can be matched to its level.</li>
+    <li>“All” and “None” sit in the chip row as if they were tags.</li>
+    <li>Export, Import and Collapse All carry the same outlined weight as each other.</li>
+  </ul>
+  <p><strong>Tweaks (design only; data and behaviour as today):</strong></p>
+  <ol>
+    <li><strong>Use the Org Manager tree table, every chevron on the left.</strong> Every organisation row has a chevron at its indent. Opening it shows two rows, one level in, each with its own chevron: <strong>Type of Mark</strong> with its count (the tags that drive the organisation’s permissions) and <strong>N sub-organisations</strong>. Opening Type of Mark shows the tags. Opening the count shows the sub-organisations, each an organisation row with its own chevron, and the pattern repeats to any depth. Each opened item indents 16px from its parent, with a guide line down from the parent’s chevron. An organisation with none shows “No sub-organisations” with a disabled chevron. The Access column stays as a read-only count on organisation rows, so organisations can be compared without opening anything. “adidas: Users” displays as “Users” under adidas.</li>
+    <li><strong>An Access column with the existing count.</strong> “27 of 28 selected”: the same numbers as today’s “27 of 28 available”, with the same noun as Org Manager. A child’s total is what its parent grants (13 of 13), as today.</li>
+    <li><strong>Tags one level in, under Type of Mark.</strong> The tag group uses the Selectable Tag Chip in the one tag colour; selected adds fill, weight and a check. That alone makes 27 and 13 look different.</li>
+    <li><strong>“All” leaves the chip row.</strong> It selects every tag, so it’s an action: render it as a Tertiary “Select all” in the group header. “None” follows the open question in section 6.</li>
+    <li><strong>Toolbar by Scale tier.</strong> Add Organisation stays Primary at far right. Export Org Tag Rights, Import Org Tag Rights and Collapse All are peripheral or view controls, so they become Tertiary, to its left.</li>
+    <li><strong>Delete on hover.</strong> Ghost icon button, as in Org Manager.</li>
+    <li><strong>Description stays, quieter.</strong> <code>--text-subtle</code>, one line, full text in a tooltip.</li>
+  </ol>
+  <p>The wizard header (Cancel, Previous, Next, Save) and stepper are unchanged. This screen runs on a light surface while the FIFA Org Manager runs dark, so the same tokens have to hold in both.</p>
+
+  <h2>5. Scale v1.3 revisions</h2>
+  <p>Two additions are genuine gaps, not familiarity preferences: Scale has no hierarchical table and no selectable chip, and composing either from Checkbox + Badge compromises the interaction. Both go through contribution as minor-version additions. The rest are rules and variants on existing components.</p>
+  <h3>5.1 Tree Table (new pattern, extends DataTable 3.8)</h3>
+  <p>Hierarchical rows inside the existing TanStack DataTable, using its <code>getSubRows</code> support. Built for unlimited depth.</p>
+  <div class="table-wrap"><table class="brief-table"><thead><tr><th>Property</th><th>Spec</th></tr></thead><tbody>
+    <tr><td>Row height</td><td>40px at every level</td></tr>
+    <tr><td>Indent</td><td>16px per level (<code>--spacing-4</code>), the same step at every depth. No level cap</td></tr>
+    <tr><td>Disclosure</td><td>Every row that can open has a Ghost icon button xs chevron, rotating 90°, <code>--text-subtle</code>, on the left at its indent. Nothing opens from the right. A row that could open but is empty (0 sub-organisations) keeps a disabled chevron; true leaves keep an empty 24px slot</td></tr>
+    <tr><td>Guides</td><td>1px <code>--border-emphasis</code> from each open parent’s chevron centre through its descendants. The parent’s guide turns <code>--primary-default</code> while a child row is hovered or focused</td></tr>
+    <tr><td>Name</td><td>Leaf segment only; truncates before the next column; full path in tooltip</td></tr>
+    <tr><td>Other columns</td><td>Fixed width; never shift with depth</td></tr>
+    <tr><td>Grouping rows</td><td>A parent’s contents can sit under labelled child rows, each with its own chevron (in Meta Manager: Type of Mark with its count, and N sub-organisations). Grouping rows are 36px and 13px to sit below the rows they belong to</td></tr>
+    <tr><td>Path bar</td><td>Pins under the toolbar when an open ancestor scrolls off screen; lists organisation rows only, never grouping rows; each segment jumps to that row</td></tr>
+    <tr><td>ARIA</td><td><code>role="treegrid"</code>, <code>aria-level</code>, <code>aria-expanded</code>, <code>aria-setsize</code>, <code>aria-posinset</code></td></tr>
+    <tr><td>Keyboard</td><td>→ open or move to first child; ← close or move to parent; ↑↓ rows; Enter activates</td></tr>
+  </tbody></table></div>
+  <h3>5.2 Selectable Tag Chip (new component)</h3>
+  <p>For choosing tags within a group where several are visible at once. Above 15 options in a group, use a searchable multi-select instead.</p>
+  <div class="table-wrap"><table class="brief-table"><thead><tr><th>State</th><th>Background</th><th>Border</th><th>Text</th><th>Icon</th></tr></thead><tbody>
+    <tr><td>Unselected</td><td>transparent</td><td><code>--primary-muted</code></td><td><code>--primary-default</code></td><td>none</td></tr>
+    <tr><td>Hover</td><td>transparent</td><td><code>--primary-default</code></td><td><code>--primary-default</code></td><td>none</td></tr>
+    <tr><td>Selected</td><td><code>--primary-subtle</code></td><td><code>--primary-default</code></td><td><code>--primary-default</code>, 600 weight</td><td>check 12px</td></tr>
+  </tbody></table></div>
+  <p>Tags have one default colour. Every state uses it; selection adds fill, weight and a check rather than a second hue. Height 24px, horizontal padding <code>--spacing-2</code>, radius full, 12px medium label. <code>role="checkbox"</code> with <code>aria-checked</code>; Space toggles. The check keeps Selected distinguishable without colour (WCAG 1.4.1).</p>
+  <h3>5.3 Rules and variants on existing components</h3>
+  <ul>
+    <li><strong>Status column rule (DataTable).</strong> Show a status column only when the list contains more than one status. A list scoped to one status shows none.</li>
+    <li><strong>Tabs with counts (3.11).</strong> Tab label + count in a neutral count badge. Tabs with a count of 0 stay visible and route to an empty state.</li>
+    <li><strong>Neutral count badge (Badge).</strong> <code>--surface-muted</code> background, <code>--text-subtle</code> text, 11px, radius full. Distinct from status badges and filetype badges. Paired with a noun the first time it appears (“7 selected”).</li>
+    <li><strong>Entity avatars (3.13).</strong> The hash palette applies to people; users keep it, so a person’s colour is stable across surfaces. Organisations get no avatar in a tree table, because a top-level-only avatar breaks the indent grid. Elsewhere they use the neutral avatar: <code>--surface-muted</code> background, <code>--text-subtle</code> initials.</li>
+    <li><strong>Breadcrumb (gap).</strong> Scale has no breadcrumb component; this screen needs one. Minimum spec: “/” separators only, every segment a link except the current page, middle segments truncated past 4 levels.</li>
+  </ul>
+  <h3>5.4 Colour and layout on this surface</h3>
+  <p>Colour goes only where it carries meaning. Everything else stays in the warm stone neutrals.</p>
+  <div class="table-wrap"><table class="brief-table"><thead><tr><th>Element</th><th>Colour</th><th>Why</th></tr></thead><tbody>
+    <tr><td>Rail logo mark, active nav marker</td><td><span class="sw" style="background:#006B5C"></span>Brand green <code>#006B5C</code></td><td>Brand lives in the personality layer</td></tr>
+    <tr><td>Active tab and its count badge, links, Primary and Tertiary buttons</td><td><span class="sw" style="background:#0B6E8A"></span>Cerulean <code>--primary-default</code></td><td>The action layer</td></tr>
+    <tr><td>Expanded event row or sub-organisation</td><td>2px Cerulean left edge</td><td>Scale’s accordion open state (3.12)</td></tr>
+    <tr><td>Tag chips and their group rule</td><td>The one default tag colour</td><td>Selection adds fill, weight and a check, never a second hue</td></tr>
+    <tr><td>Zero counts (“0 selected”)</td><td><code>--text-faint</code></td><td>Rows with access stand out without a new indicator</td></tr>
+    <tr><td>Surfaces, headers, borders, metadata</td><td><span class="sw" style="background:#ECEAE9"></span>Warm stone neutrals</td><td>The base layer</td></tr>
+  </tbody></table></div>
+  <p>Layout runs full width at every breakpoint. Side padding scales with the viewport (16–40px), list columns are proportional, and wide tables scroll inside their own container so the page never scrolls sideways.</p>
+  <p class="brief-note">One flag: these screens run on a dark FIFA surface, but Scale’s semantic tokens are only defined for light. Dark isn’t one of the five theming points. Every token here needs a dark mapping before this ships on this tenant, and that’s a Scale-level decision. These wireframes use approximated dark values for review only.</p>
+
+  <h2>6. Open questions and data issues</h2>
+  <p>Six questions to settle before handoff, and four data issues to raise with FIFA admins. None of them change the scope.</p>
+  <ol>
+    <li><strong>What should “Permissions: Inherit” say?</strong> Inheritance isn’t a thing, but parent gating is, and the feature register lists “inheritance, or explicit specification” as shipped (SCR-85). If the label describes gating, reword it; if it’s vestigial, remove it. Correct the register either way.</li>
+    <li><strong>What is “None”?</strong> A real option (no access to this group) or a reset? It looks selected on FMClinicoE only and unselected on FIFA Branding Team, so it needs one defined state before the chip spec is final. In Meta Manager, top-level orgs show “All” where adidas and its child show “None”; confirm “All” is select-all before it becomes a Tertiary action.</li>
+    <li><strong>What does the trash icon on an event delete?</strong> Org access (reversible, neutral icon) or the event itself (Destructive, red on hover)?</li>
+    <li><strong>Is “Events” a FIFA-configured label?</strong> FIFA Corporate Identity and the Historic Marks groups aren’t events. The same surface also says Companies, Organisations and Sub Organisations; pick one noun.</li>
+    <li><strong>What is the default tag colour?</strong> The wireframes assume Cerulean. If tags have their own default, swap it into the chip spec; every state still uses that one colour.</li>
+    <li><strong>Should Meta Manager get Org Manager’s “Selected only” switch?</strong> Org Manager has it per tag group; Meta Manager doesn’t. Adding it is a behaviour change, so it’s out of this pass, but it’s the obvious next step for 28-tag groups.</li>
+  </ol>
+  <p>Data issues, not UI:</p>
+  <ul>
+    <li><strong>FIFA U-17 World Cup Qatar 2026</strong> has dates 01–30 Nov 2026 but a description of 19 Nov to 13 Dec 2026. One is wrong. The description field is being used to restate dates, which guarantees drift.</li>
+    <li><strong>FIFA Suppliers: FILM NOVA</strong> sits as a sibling of FIFA Suppliers, not a child, despite its name. Either it’s misparented or the colon convention is doing a job the hierarchy should.</li>
+    <li><strong>“FIFA: FIFA Staff DL” and “FIFA Staff DL New Media”</strong> use two naming conventions under the same parent. Leaf-name display will expose this, so clean it up before shipping.</li>
+    <li><strong>“adidas: Users”</strong> is a sub-organisation named Users. With a Users tab arriving in Org Manager, an org called Users will read as the feature. Rename it to say who the users are.</li>
+  </ul>
+</article>
+</template>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var I = {
+    chev: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    check: '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-4.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    trash: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    search: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    back: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 3L4.5 7l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ok: '<svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-4.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    down: '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    plus: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2.5v9M2.5 7h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
+  };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  /* ---------- Data from the current screens ---------- */
+  function org(id, name, extra) {
+    var o = { id: id, name: name, by: 'SD Admin', date: '20 Oct 2026' };
+    for (var k in extra) o[k] = extra[k];
+    return o;
+  }
+  var tree = [
+    org('admin', '*FIFA Admin Master View', { date: '03 Nov 2026' }),
+    org('cp', 'Commercial Partner', { stub: true }),
+    org('fifa', 'FIFA', { date: '21 Oct 2026', children: [
+      org('branding', 'FIFA Branding Team', { by: 'Roland Bejjani', date: '01 Nov 2026', link: 'branding' }),
+      org('fmarc', 'FIFA F-Marc_Medical Centres of Excellence', { link: 'fmarc', children: [
+        org('clinic', 'FIFA F-Marc_Medical Centres of Excellence: FMClinicoE only'),
+        org('coe', 'FIFA F-Marc_Medical Centres of Excellence: FMCoE only', { stub: true })
+      ] }),
+      org('nm', 'FIFA Staff DL New Media'),
+      org('prod', 'FIFA Staff DL Productions'),
+      org('sup', 'FIFA Suppliers', { stub: true }),
+      org('nova', 'FIFA Suppliers: FILM NOVA', { by: 'Roland Bejjani', date: '22 Nov 2026' }),
+      org('dl', 'FIFA: FIFA Staff DL'),
+      org('vo', 'FIFA: FIFA Staff VO')
+    ] }),
+    org('museum', 'FIFA Museum', { date: '21 Oct 2026', stub: true }),
+    org('host', 'Host City', { stub: true }),
+    org('lic', 'Licensee', { stub: true }),
+    org('loc', 'LOC / LSF', { stub: true }),
+    org('mp', 'Media Partner', { date: '27 Oct 2026', stub: true }),
+    org('ma', 'Member Association / Confederation', { stub: true })
+  ];
+
+  function tags(list) { return list.map(function (t) { return { label: t[0], sel: !!t[1] }; }); }
+  function phTags(sel, total) { var a = []; for (var i = 0; i < total; i++) a.push({ ph: true, sel: i < sel }); return a; }
+  function ev(id, name, dates, desc, groups) { return { id: id, name: name, dates: dates, desc: desc, groups: groups }; }
+
+  var brandingEvents = [
+    ev('ci', 'FIFA Corporate Identity', '17 Apr 2026 – 31 Jul 2026', '', [
+      { id: 'tom', name: 'Type of Mark', tags: tags([['None', 0], ['FIFA Corporate Mark', 1], ['Composite Logo', 1], ['Colour Palette', 1], ['Graphic Elements', 1], ['Pitch Line', 1], ['Typeface', 1], ['Corporate', 1]]) }
+    ]),
+    ev('trophy', 'FIFA World Cup™ Official Trophy', '17 Apr 2026 – 31 Jul 2026', '', [{ id: 'tom', name: 'Type of Mark', tags: phTags(1, 4) }]),
+    ev('qatar', 'FIFA U-17 World Cup Qatar 2026™', '01 Nov 2026 – 30 Nov 2026', '19 November to 13 December 2026', [{ id: 'g', name: null, tags: phTags(8, 10) }]),
+    ev('wc', 'FIFA World Cup 2026™', '11 Jun 2026 – 19 Jul 2026', '', [{ id: 'g', name: null, tags: phTags(20, 22) }]),
+    ev('futsal', 'FIFA Futsal World Cup Uzbekistan 2024™', '14 Sep 2024 – 06 Oct 2024', '', [{ id: 'g', name: null, tags: phTags(0, 4) }]),
+    ev('morocco', 'FIFA U-17 Women’s World Cup Morocco 2026™', '17 Oct 2026 – 07 Nov 2026', '17 October to 7 November 2026', [{ id: 'g', name: null, tags: phTags(8, 10) }])
+  ];
+
+  var childEventNames = [
+    ['ci', 'FIFA Corporate Identity'], ['trophy', 'FIFA World Cup™ Official Trophy'], ['qatar', 'FIFA U-17 World Cup Qatar 2026™'],
+    ['wc', 'FIFA World Cup 2026™'], ['futsal', 'FIFA Futsal World Cup Uzbekistan 2024™'], ['morocco', 'FIFA U-17 Women’s World Cup Morocco 2026™'],
+    ['hist', 'FIFA World Cup™ Historic Marks'], ['whist', 'FIFA Women’s World Cup™ Historic Marks'],
+    ['beach', 'FIFA Beach Soccer World Cup Seychelles 2025™'], ['brazil', 'FIFA Women’s World Cup Brazil 2027™']
+  ];
+  var clinicEvents = childEventNames.map(function (e) {
+    var groups = e[0] === 'ci' ? [{ id: 'tom', name: 'Type of Mark', tags: tags([['None', 0]]) }] : [];
+    return ev(e[0], e[1], '', '', groups);
+  });
+  var coeEvents = childEventNames.map(function (e) { var x = ev(e[0], e[1], '', '', []); x.ph = true; return x; });
+  var fmarcEvents = childEventNames.slice(0, 6).map(function (e) { var x = ev(e[0], e[1], '', '', []); x.ph = true; x.datesPh = true; return x; });
+
+  function phEvents(n) { var a = []; for (var i = 0; i < n; i++) a.push({ id: 'p' + i, name: 'Event', namePh: true, ph: true, datesPh: true, desc: '', groups: [] }); return a; }
+  var adidasEvents = phEvents(4), adsubEvents = phEvents(4);
+  var pages = {
+    branding: {
+      title: 'FIFA Branding Team',
+      crumbs: [['Home', '#list'], ['Active Companies', '#list'], ['FIFA', '#list'], ['FIFA Branding Team']],
+      events: brandingEvents, total: 26, users: null, subs: [], defaultTab: 'events'
+    },
+    fmarc: {
+      title: 'FIFA F-Marc_Medical Centres of Excellence',
+      crumbs: [['Home', '#list'], ['Active Companies', '#list'], ['FIFA', '#list'], ['FIFA F-Marc_Medical Centres of Excellence']],
+      events: fmarcEvents, total: 26, users: null, defaultTab: 'subs',
+      subs: [
+        { id: 'clinic', name: 'FMClinicoE only', full: 'FIFA F-Marc_Medical Centres of Excellence: FMClinicoE only', meta: 'Permissions: Inherit', events: clinicEvents },
+        { id: 'coe', name: 'FMCoE only', full: 'FIFA F-Marc_Medical Centres of Excellence: FMCoE only', meta: '', events: coeEvents }
+      ]
+    }
+  };
+  pages.adidas = {
+    title: 'adidas',
+    crumbs: [['Home', '#list'], ['Active Companies', '#list'], ['adidas']],
+    events: adidasEvents, total: 17, defaultTab: 'users',
+    users: [
+      { name: 'Roland Bejjani', ini: 'RB', c: '#2E7D4F' },
+      { name: 'Alex Perez', ini: 'AP', c: '#1F6F8B' },
+      { name: 'Andrea Casiraghi', ini: 'AC', c: '#7B4BB3' }
+    ],
+    subs: [{ id: 'adsub', name: 'Sub-organisation', namePh: true, full: 'Sub-organisation', meta: '', events: adsubEvents }]
+  };
+  var ctxEvents = { 'adidas-ev': adidasEvents, 'sub-adsub': adsubEvents, 'branding-ev': brandingEvents, 'fmarc-ev': fmarcEvents, 'sub-clinic': clinicEvents, 'sub-coe': coeEvents };
+
+  var notes = {
+    meta: [
+      'Every chevron sits on the left, at its row’s indent. Nothing opens from the right.',
+      'Every organisation has a chevron. Opening it shows two rows: Type of Mark (the tags that drive its permissions) and its sub-organisation count, each with its own chevron.',
+      'Open Type of Mark to see the tags. Open the count to see the sub-organisations, each with its own chevron, and the pattern repeats.',
+      'Each opened item indents 16px from its parent, with a guide line down from the parent’s chevron. Hover a row and its parent’s guide turns Cerulean.',
+      'The illustrative depth example at the bottom runs several levels deep. Scroll past an open parent and a path bar pins at the top.',
+      'Access stays as a read-only count on each organisation row, so you can compare without opening anything.',
+      'Selected chips add a fill and a check; Select all follows the chips. Export, Import and Collapse all are Tertiary.'
+    ],
+    adidas: [
+      'Users is a new stat card, so it becomes the third tab, in card order: Events, Users, Sub-organisations.',
+      'The stacked user cards become one table: avatar and full name in 40px rows, with the same header and borders as the other tables.',
+      'The Users heading above the list is gone; the active tab already says it.',
+      'People keep their hash-assigned avatar colour, so a person looks the same everywhere. Organisations stay neutral.',
+      'Nothing new is shown: name and avatar only. Grey bars stand in for this organisation’s events and sub-organisation, which aren’t in the screenshot.'
+    ],
+    brief: [
+      'The brief behind the three screens. Each section links to the screen it describes.',
+      'The same brief lives in the Claude Doc, where it can be edited and commented on.'
+    ],
+    list: [
+      'The Status column is gone. This page only lists active organisations, so every row said Active.',
+      'One chevron per row, at the row’s own indent. Each level indents 24px, the chevron’s width, so a child’s chevron sits under its parent’s name.',
+      'A 1px guide runs down from each open parent. Hover or focus a row and its parent’s guide turns Cerulean, showing which siblings belong together.',
+      'Scroll past an open parent and a path bar pins at the top: “Inside FIFA”. Click a segment to jump back.',
+      'Arrow keys: right opens, left closes or moves to the parent, up and down move between rows.',
+      'Org avatars are gone; a top-level-only avatar pushed names out of the indent grid.',
+      'Child names drop their parent’s name when it’s followed by a colon. Hover for the full path.'
+    ],
+    branding: [
+      'The stat cards are tabs with the same counts. They already switched the content below them.',
+      'No Active badge in the page header. Status isn’t shown anywhere in Org Manager.',
+      'Users sits between Events and Sub-organisations, matching the stat card order.',
+      'The 26 event cards are one table with a single header, so labels aren’t repeated on every card.',
+      'The tag count moved from a box before the name to the Access column, with its noun: “7 selected”.',
+      'The delete icon appears on row hover or keyboard focus.',
+      'Collapse all is a tertiary text button; Add event stays primary.',
+      'The eye toggle is a labelled switch, Selected only, still one per tag group.',
+      'Tags keep their one default colour. Selected chips add a fill and a check; unselected chips are outlined in the same colour.',
+      'An expanded row carries a Cerulean left edge, as Scale accordions do.'
+    ],
+    fmarc: [
+      'Each sub-organisation expands into the same event table as the detail view.',
+      'The 0 pills read “0 selected” in an Access column.',
+      'Tags the parent doesn’t grant stay hidden, as today. Here only None is available.',
+      'Permissions: Inherit sits as quiet metadata beside the name. No Active badge on sub-organisation rows.',
+      'No avatar below the top level; the indent and breadcrumb identify the organisation.'
+    ]
+  };
+
+  /* ---------- State ---------- */
+  var state = {
+    tree: { fifa: true, fmarc: true },
+    filter: '',
+    tab: {},
+    open: { 'branding-ev:ci': true, 'sub-clinic:ci': true },
+    subOpen: { clinic: true },
+    selOnly: {},
+    deleted: {},
+    notes: false
+  };
+  var pendingDelete = null;
+
+  /* ---------- List view ---------- */
+  function matches(n, q) { return n.name.toLowerCase().indexOf(q) > -1 || (n.children || []).some(function (c) { return matches(c, q); }); }
+  function leaf(n, parent) { var p = parent ? parent.name + ': ' : null; return p && n.name.indexOf(p) === 0 ? n.name.slice(p.length) : n.name; }
+  function initials(name) { return name.replace(/[^A-Za-z0-9 /]/g, '').split(/[ /]+/).filter(Boolean).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase(); }
+
+  var STEP = 16;
+  function guides(anc) { return anc.map(function (id, i) { return '<span class="guide" data-anc="' + id + '" style="left:' + (24 + i * STEP) + 'px"></span>'; }).join(''); }
+  function rowAttrs(n, name, anc, parent, level) { return ' data-row-id="' + n.id + '" data-label="' + esc(name) + '" data-anc="' + anc.join(',') + '" data-parent="' + (parent ? parent.id : '') + '" aria-level="' + (level + 1) + '"'; }
+
+  function treeRows() {
+    var q = state.filter.trim().toLowerCase();
+    var out = [];
+    (function walk(nodes, level, parent, anc, path) {
+      nodes.forEach(function (n) {
+        if (q && !matches(n, q)) return;
+        var expandable = !!(n.children || n.stub);
+        var open = q ? (n.children || []).some(function (c) { return matches(c, q); }) : !!state.tree[n.id];
+        var name = leaf(n, parent);
+        var full = path.concat(name).join(' / ');
+        var chev = expandable
+          ? '<button type="button" class="btn btn-ghost icon-btn chev" data-act="tree" data-id="' + n.id + '" data-fk="tree:' + n.id + '" aria-expanded="' + open + '" aria-label="' + (open ? 'Collapse ' : 'Expand ') + esc(name) + '">' + I.chev + '</button>'
+          : '<span class="slot"></span>';
+        var label = n.link
+          ? '<a class="name-link" href="#' + n.link + '" title="' + esc(full) + '">' + esc(name) + '</a>'
+          : '<span class="name" title="' + esc(full) + '">' + esc(name) + '</span>';
+        out.push('<tr' + rowAttrs(n, name, anc, parent, level) + (expandable ? ' aria-expanded="' + open + '"' : '') + '><td class="tree-cell">' + guides(anc) + '<div class="name-cell" style="padding-left:' + (level * STEP) + 'px">' + chev + label + '</div></td><td class="muted">' + esc(n.by) + '</td><td class="muted">' + esc(n.date) + '</td></tr>');
+        if (open && n.children) walk(n.children, level + 1, n, anc.concat(n.id), path.concat(name));
+        else if (open && n.stub && !q) out.push('<tr><td colspan="3" class="tree-cell">' + guides(anc.concat(n.id)) + '<div class="as-today" style="padding-left:' + ((level + 1) * STEP + 28) + 'px">Sub-organisations aren’t included in this prototype.</div></td></tr>');
+      });
+    })(tree, 0, null, [], []);
+    if (!out.length) out.push('<tr><td colspan="3" class="empty">No organisations match “' + esc(state.filter) + '”.</td></tr>');
+    return out.join('');
+  }
+
+  function renderList() {
+    return '<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#list">Home</a></li><li aria-current="page">Active Companies</li></ol></nav>' +
+      '<div class="ph-head"><h1>Active Companies</h1></div>' +
+      '<div class="search">' + I.search + '<label class="sr-only" for="filter">Filter organisations</label><input id="filter" type="search" placeholder="Type to filter" value="' + esc(state.filter) + '" autocomplete="off"></div>' +
+      '<div class="pathbar-wrap"><div class="pathbar" id="pathbar" hidden></div></div><div class="table-wrap"><table class="tree-table" role="treegrid" aria-label="Organisations"><colgroup><col><col style="width:22%"><col style="width:18%"></colgroup>' +
+      '<thead><tr><th scope="col">Name</th><th scope="col">Last modified by</th><th scope="col">Last modified date</th></tr></thead>' +
+      '<tbody id="treeBody">' + treeRows() + '</tbody></table></div>';
+  }
+
+  /* ---------- Events table ---------- */
+  function count(e) { return e.groups.reduce(function (s, g) { return s + g.tags.filter(function (t) { return t.sel; }).length; }, 0); }
+
+  function groupHtml(ctx, e, g) {
+    var gk = ctx + ':' + e.id + ':' + g.id;
+    var only = !!state.selOnly[gk];
+    var n = g.tags.filter(function (t) { return t.sel; }).length;
+    var chips = g.tags.map(function (t, i) {
+      if (only && !t.sel) return '';
+      var lab = t.ph ? '<span class="ph" aria-hidden="true"></span><span class="sr-only">Tag ' + (i + 1) + '</span>' : esc(t.label);
+      return '<button type="button" class="chip" aria-pressed="' + t.sel + '" data-act="chip" data-ctx="' + ctx + '" data-ev="' + e.id + '" data-g="' + g.id + '" data-i="' + i + '" data-fk="chip:' + gk + ':' + i + '">' + (t.sel ? I.check : '') + lab + '</button>';
+    }).join('');
+    if (only && !n) chips = '<span class="as-today">No tags selected in this group.</span>';
+    var name = g.name ? esc(g.name) : '<span class="bar" style="width:88px" aria-label="Tag group"></span>';
+    return '<div class="group"><div class="group-head"><span class="group-name">' + name + '</span><span class="group-count">' + n + ' selected</span>' +
+      '<button type="button" class="switch-btn" role="switch" aria-checked="' + only + '" data-act="selonly" data-key="' + gk + '" data-fk="so:' + gk + '"><span class="track"><span class="knob"></span></span>Selected only</button></div>' +
+      '<div class="chips">' + chips + '</div></div>';
+  }
+
+  function eventsTable(ctx, events, o) {
+    var cols = 2 + (o.dates ? 1 : 0) + (o.desc ? 1 : 0) + (o.del ? 1 : 0);
+    var head = '<tr><th scope="col">Event</th>' + (o.dates ? '<th scope="col">Dates</th>' : '') + (o.desc ? '<th scope="col">Description</th>' : '') + '<th scope="col">Access</th>' + (o.del ? '<th scope="col"><span class="sr-only">Actions</span></th>' : '') + '</tr>';
+    var body = events.filter(function (e) { return !state.deleted[ctx + ':' + e.id]; }).map(function (e) {
+      var k = ctx + ':' + e.id;
+      var open = !!state.open[k];
+      var acc = e.ph ? '<span class="bar" style="width:72px" aria-label="Count not shown"></span>' : count(e) + ' selected';
+      var dates = e.datesPh ? '<span class="bar" style="width:140px"></span>' : esc(e.dates);
+      var row = '<tr class="' + (open ? 'is-open' : '') + '"><td><div class="name-cell"><button type="button" class="btn btn-ghost icon-btn chev" data-act="ev" data-key="' + k + '" data-fk="ev:' + k + '" aria-expanded="' + open + '" aria-label="' + (open ? 'Collapse ' : 'Expand ') + esc(e.name) + '">' + I.chev + '</button><span class="name">' + (e.namePh ? '<span class="bar" style="width:200px"></span>' : esc(e.name)) + '</span></div></td>' +
+        (o.dates ? '<td class="muted">' + dates + '</td>' : '') +
+        (o.desc ? '<td><div class="desc" title="' + esc(e.desc) + '">' + esc(e.desc) + '</div></td>' : '') +
+        '<td class="num' + (!e.ph && !count(e) ? ' zero' : '') + '">' + acc + '</td>' +
+        (o.del ? '<td class="act"><button type="button" class="btn btn-ghost icon-btn del" data-act="del" data-ctx="' + ctx + '" data-id="' + e.id + '" data-fk="del:' + k + '" aria-label="Delete ' + esc(e.name) + '">' + I.trash + '</button></td>' : '') + '</tr>';
+      if (open) {
+        var inner = e.groups.length ? e.groups.map(function (g) { return groupHtml(ctx, e, g); }).join('') : '<div class="as-today">Tag groups as today.</div>';
+        row += '<tr class="is-open detail"><td colspan="' + cols + '">' + inner + '</td></tr>';
+      }
+      return row;
+    }).join('');
+    return '<div class="table-wrap"><table><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+  }
+
+  function anyOpen(ctx) { return Object.keys(state.open).some(function (k) { return state.open[k] && k.indexOf(ctx + ':') === 0; }); }
+
+  /* ---------- Detail view ---------- */
+  function renderDetail(key) {
+    var p = pages[key];
+    var tab = state.tab[key] || p.defaultTab;
+    var crumbs = p.crumbs.map(function (c) { return c[1] ? '<li><a href="' + c[1] + '">' + esc(c[0]) + '</a></li>' : '<li aria-current="page">' + esc(c[0]) + '</li>'; }).join('');
+    var tabs = [['events', 'Events', p.total], ['users', 'Users', p.users ? p.users.length : null], ['subs', 'Sub-organisations', p.subs.length]].map(function (t) {
+      var on = t[0] === tab;
+      return '<button type="button" class="tab" role="tab" id="tab-' + t[0] + '" aria-selected="' + on + '" aria-controls="panel" tabindex="' + (on ? 0 : -1) + '" data-act="tab" data-page="' + key + '" data-tab="' + t[0] + '" data-fk="tab:' + t[0] + '">' + t[1] + '<span class="count">' + (t[2] === null ? '<span class="bar" style="width:12px;height:6px" aria-label="count not shown"></span>' : t[2]) + '</span></button>';
+    }).join('');
+    var body;
+    if (tab === 'events') {
+      var ctx = key + '-ev';
+      var shown = p.events.filter(function (e) { return !state.deleted[ctx + ':' + e.id]; }).length;
+      body = '<div class="toolbar"><div class="end"><button type="button" class="btn btn-tertiary" data-act="collapse" data-ctx="' + ctx + '" data-fk="collapse"' + (anyOpen(ctx) ? '' : ' disabled') + '>Collapse all</button>' +
+        '<button type="button" class="btn btn-primary" data-act="add" data-fk="add">' + I.plus + 'Add event</button></div></div>' +
+        eventsTable(ctx, p.events, { dates: true, desc: true, del: true }) +
+        '<p class="foot">Showing ' + shown + ' of ' + p.total + ' events in this prototype.</p>';
+    } else if (tab === 'users') {
+      body = usersPanel(p);
+    } else if (!p.subs.length) {
+      body = '<div class="subs"><div class="empty">No sub-organisations.</div></div>';
+    } else {
+      var someOpen = p.subs.some(function (s) { return state.subOpen[s.id]; });
+      body = '<div class="toolbar"><div class="end"><button type="button" class="btn btn-tertiary" data-act="collapse-subs" data-page="' + key + '" data-fk="collapse"' + (someOpen ? '' : ' disabled') + '>Collapse all</button></div></div>' +
+        '<div class="subs">' + p.subs.map(function (s) {
+          var open = !!state.subOpen[s.id];
+          return '<div class="sub"><button type="button" class="sub-head" data-act="sub" data-id="' + s.id + '" data-fk="sub:' + s.id + '" aria-expanded="' + open + '"><span class="chev-i">' + I.chev + '</span>' +
+            (s.namePh ? '<span class="bar" style="width:160px" aria-label="Sub-organisation"></span>' : '<span class="sub-name" title="' + esc(s.full) + '">' + esc(s.name) + '</span>') +
+            (s.meta ? '<span class="sub-meta">' + esc(s.meta) + '</span>' : '') + '</button>' +
+            (open ? '<div class="sub-body">' + eventsTable('sub-' + s.id, s.events, { dates: false, desc: false, del: false }) + '</div>' : '') + '</div>';
+        }).join('') + '</div>';
+    }
+    return '<nav class="crumbs" aria-label="Breadcrumb"><ol>' + crumbs + '</ol></nav>' +
+      '<div class="ph-head"><a class="btn btn-ghost icon-btn back" href="#list" aria-label="Back to Active Companies">' + I.back + '</a><h1>' + esc(p.title) + '</h1></div>' +
+      '<div class="tabs" role="tablist" aria-label="' + esc(p.title) + '">' + tabs + '</div>' +
+      '<div id="panel" role="tabpanel" aria-labelledby="tab-' + tab + '">' + body + '</div>';
+  }
+
+  function usersPanel(p) {
+    var head = '<div class="table-wrap"><table><thead><tr><th scope="col">Name</th></tr></thead><tbody>';
+    if (p.users === null) {
+      var rows = '';
+      for (var i = 0; i < 3; i++) rows += '<tr><td><div class="name-cell"><span class="avatar person" style="--av:var(--bar)" aria-hidden="true"></span><span class="name"><span class="bar" style="width:' + (140 - i * 20) + 'px"></span></span></div></td></tr>';
+      return head + rows + '</tbody></table></div><p class="foot">Users as today. Names for this organisation aren’t in the screenshots.</p>';
+    }
+    if (!p.users.length) return '<div class="subs"><div class="empty">No users.</div></div>';
+    return head + p.users.map(function (u) {
+      return '<tr><td><div class="name-cell"><span class="avatar person" style="--av:' + u.c + '" aria-hidden="true">' + esc(u.ini) + '</span><span class="name">' + esc(u.name) + '</span></div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+  }
+
+  /* ---------- Meta Manager: Organisation Rights ---------- */
+  var ALL = ['Authorised Travel Package Logo', 'Colour palette', 'Composite Logo', 'Draw Logo', 'Event Typeface', 'Host City Logo', 'Licensing and Retail', 'Official Audio Identity', 'Official Champagne Logo', 'Official Emblem', 'Official Event Store logo', 'Official Licensed Product Logo', 'Official Look', 'Official Slogan', 'Official Timekeeper Logo', 'Play-Off Logo', 'Qualifiers Logo', 'Typeface', 'Volunteer Official Look', 'Volunteer Logo', 'Wordmark', 'Final Draw Logo', 'Official Hospitality Logo', 'Qualifier Materials', 'Host City Official Look', 'Official Emblem Animation with Audio Logo', 'FIFA Women’s World Cup Brazil 2027™ Official Event Title', 'Iconography'];
+  var CP = ['Colour palette', 'Composite Logo', 'Draw Logo', 'Event Typeface', 'Official Audio Identity', 'Official Emblem', 'Official Event Store logo', 'Official Look', 'Official Slogan', 'Typeface', 'Wordmark', 'Host City Official Look', 'Official Emblem Animation with Audio Logo'];
+  function mtags(list, selFn, none) { var a = list.map(function (n) { return { label: n, sel: selFn(n) }; }); if (none) a.unshift({ label: 'None', sel: false, none: true }); return a; }
+  function ill(id, name, children) { return { id: id, name: name, ill: true, desc: '', tags: null, children: children }; }
+  var metaTree = [
+    { id: 'm-admin', name: '*FIFA Admin Master View', desc: '', tags: mtags(ALL, function (n) { return n !== 'Iconography'; }) },
+    { id: 'm-cp', name: 'Commercial Partner', desc: 'Event-related sponsorships', tags: mtags(ALL, function (n) { return CP.indexOf(n) > -1; }), more: 24, children: [
+      { id: 'm-acpv', name: 'A Commercial Partners View', desc: '', tags: null },
+      { id: 'm-adi', name: 'ADI', desc: '', tags: mtags(CP, function () { return false; }) },
+      { id: 'm-adidas', name: 'adidas', desc: '', tags: mtags(CP, function () { return true; }, true), children: [
+        { id: 'm-adusers', name: 'adidas: Users', desc: '', tags: mtags(CP, function () { return true; }, true) }
+      ] },
+      { id: 'm-airbnb', name: 'AirBnB', desc: '', tags: null },
+      { id: 'm-aa', name: 'American Airlines', desc: '', tags: null },
+      { id: 'm-ab', name: 'Anheuser-Busch', desc: '', tags: null, stubKids: 1 },
+      { id: 'm-aramco', name: 'Aramco', desc: '', tags: null },
+      { id: 'm-boa', name: 'Bank of America', desc: '', tags: null },
+      { id: 'm-caliente', name: 'Caliente', desc: '', tags: null },
+      { id: 'm-coke', name: 'Coca-Cola', desc: '', tags: null }
+    ] },
+    { id: 'm-fifa', name: 'FIFA', desc: '', tags: null, stubKids: 7 },
+    { id: 'm-museum', name: 'FIFA Museum', desc: '', tags: null, stubKids: 3 },
+    { id: 'm-host', name: 'Host City', desc: 'including Host City Suppliers', tags: null, stubKids: 3 },
+    { id: 'm-lic', name: 'Licensee', desc: 'Event Licensees, Special Agreements, Branded Licensees, Numismatic, Philatelic, LOC with Licensing rights', tags: null, stubKids: 12 },
+    { id: 'm-loc', name: 'LOC / LSF', desc: '', tags: null, stubKids: 9 },
+    ill('m-depth', 'Depth example', [ill('m-l1', 'Level 1 example', [ill('m-l2', 'Level 2 example', [ill('m-l3', 'Level 3 example', [ill('m-l4', 'Level 4 example', [ill('m-l5', 'Level 5 example', [ill('m-l6', 'Level 6 example with a name long enough to truncate before it reaches the Description column')])])])]), ill('m-l2b', 'Level 2 sibling')]), ill('m-l1b', 'Level 1 sibling')])
+  ];
+  var metaIndex = {};
+  (function idx(nodes) { nodes.forEach(function (n) { metaIndex[n.id] = n; if (n.children) idx(n.children); }); })(metaTree);
+  state.mx = { 'o:m-cp': true, 's:m-cp': true, 'o:m-adidas': true, 't:m-adidas': true, 's:m-adidas': true };
+  ['m-depth', 'm-l1', 'm-l2', 'm-l3'].forEach(function (id) { state.mx['o:' + id] = true; state.mx['s:' + id] = true; });
+  state.mfilter = '';
+  state.mdeleted = {};
+
+  function mcount(n) { var t = n.tags.filter(function (x) { return !x.none; }); return { sel: t.filter(function (x) { return x.sel; }).length, total: t.length }; }
+  function kidsCount(n) { return n.children ? n.children.filter(function (c) { return !state.mdeleted[c.id]; }).length + (n.more || 0) : (n.stubKids || 0); }
+  function mmatch(n, q) { return n.name.toLowerCase().indexOf(q) > -1 || (n.children || []).some(function (c) { return mmatch(c, q); }); }
+
+  /* Every node is a row with a left chevron:
+     organisation → [tag group row, sub-organisations row]
+     tag group → chips;  sub-organisations → organisations → … */
+  function metaRows() {
+    var q = state.mfilter.trim().toLowerCase();
+    var out = [];
+    function isOpen(key) { return !!state.mx[key]; }
+    function chevBtn(key, open, label, disabled) {
+      if (disabled) return '<button type="button" class="btn btn-ghost icon-btn chev" disabled aria-disabled="true" aria-label="' + esc(label) + '">' + I.chev + '</button>';
+      return '<button type="button" class="btn btn-ghost icon-btn chev" data-act="mx" data-key="' + key + '" data-fk="mx:' + key + '" aria-expanded="' + open + '" aria-label="' + (open ? 'Collapse ' : 'Expand ') + esc(label) + '">' + I.chev + '</button>';
+    }
+    function tr(key, kind, label, anc, depth, cls, cells, open) {
+      return '<tr class="' + (cls || '') + '" data-row-id="' + key + '" data-kind="' + kind + '" data-label="' + esc(label) + '" data-anc="' + anc.join(',') + '" data-parent="' + (anc.length ? anc[anc.length - 1] : '') + '" aria-level="' + (depth + 1) + '"' + (open === null ? '' : ' aria-expanded="' + open + '"') + '>' + cells + '</tr>';
+    }
+    function nameCell(anc, depth, inner) { return '<td class="tree-cell">' + guides(anc) + '<div class="name-cell" style="padding-left:' + (depth * STEP) + 'px">' + inner + '</div></td>'; }
+    function note(anc, depth, text) { out.push('<tr><td colspan="4" class="tree-cell">' + guides(anc) + '<div class="as-today" style="padding-left:' + (depth * STEP + 28) + 'px">' + text + '</div></td></tr>'); }
+
+    function org(n, depth, parent, anc, path) {
+      if (state.mdeleted[n.id] || (q && !mmatch(n, q))) return;
+      var key = 'o:' + n.id;
+      var forced = q && (n.children || []).some(function (c) { return mmatch(c, q); });
+      var open = isOpen(key) || forced;
+      var name = leaf(n, parent);
+      var full = path.concat(name).join(' / ');
+      var c = n.tags ? mcount(n) : null;
+      out.push(tr(key, 'org', name, anc, depth, open ? 'org-row is-open' : 'org-row',
+        nameCell(anc, depth, chevBtn(key, open, name) + '<span class="name' + (n.ill ? ' ill' : '') + '" title="' + esc(full) + '">' + esc(name) + '</span>' + (n.ill && depth === 0 ? '<span class="ill-tag">Illustrative</span>' : '')) +
+        '<td class="dsc"><div title="' + esc(n.desc) + '">' + esc(n.desc) + '</div></td>' +
+        '<td class="acc num' + (c && !c.sel ? ' zero' : '') + '">' + (c ? c.sel + ' of ' + c.total + ' selected' : '<span class="bar" style="width:96px" aria-label="Not shown"></span>') + '</td>' +
+        '<td class="act"><button type="button" class="btn btn-ghost icon-btn del" data-act="mdel" data-id="' + n.id + '" data-fk="mdel:' + n.id + '" aria-label="Delete ' + esc(name) + '">' + I.trash + '</button></td>', open));
+      if (!open) return;
+      var a1 = anc.concat(key), d1 = depth + 1;
+
+      // Permission-driving tag group
+      var tkey = 't:' + n.id, topen = isOpen(tkey);
+      out.push(tr(tkey, 'tags', 'Type of Mark', a1, d1, 'sub-row' + (topen ? ' is-open' : ''),
+        nameCell(a1, d1, chevBtn(tkey, topen, 'Type of Mark for ' + name) + '<span class="name"><strong>Type of Mark</strong></span><span class="row-meta">' + (c ? c.sel + ' of ' + c.total + ' selected' : 'as today') + '</span>') +
+        '<td></td><td></td><td></td>', topen));
+      if (topen) {
+        var a2 = a1.concat(tkey), d2 = d1 + 1;
+        if (c) {
+          var chips = n.tags.map(function (t, i) {
+            return '<button type="button" class="chip" aria-pressed="' + t.sel + '" data-act="mchip" data-id="' + n.id + '" data-i="' + i + '" data-fk="mc:' + n.id + ':' + i + '">' + (t.sel ? I.check : '') + esc(t.label) + '</button>';
+          }).join('');
+          out.push('<tr class="chip-row"><td colspan="4" class="tree-cell">' + guides(a2) + '<div class="chips" style="padding:6px 0 10px ' + (d2 * STEP + 4) + 'px">' + chips +
+            '<button type="button" class="btn btn-tertiary" style="height:24px" data-act="mall" data-id="' + n.id + '" data-fk="mall:' + n.id + '"' + (c.sel === c.total ? ' disabled' : '') + '>Select all</button></div></td></tr>');
+        } else note(a2, d2, 'Tags as today.');
+      }
+
+      // Sub-organisations count
+      var kids = kidsCount(n);
+      var skey = 's:' + n.id, sopen = (isOpen(skey) || forced) && kids > 0;
+      var slabel = kids ? kids + ' sub-organisation' + (kids === 1 ? '' : 's') : 'No sub-organisations';
+      out.push(tr(skey, 'subs', slabel, a1, d1, 'sub-row' + (sopen ? ' is-open' : ''),
+        nameCell(a1, d1, chevBtn(skey, sopen, slabel + ' of ' + name, !kids) + '<span class="name' + (kids ? '' : ' faint') + '">' + slabel + '</span>') +
+        '<td></td><td></td><td></td>', kids ? sopen : null));
+      if (sopen) {
+        var a3 = a1.concat(skey), d3 = d1 + 1;
+        (n.children || []).forEach(function (ch) { org(ch, d3, n, a3, path.concat(name)); });
+        var rest = n.children ? (n.more || 0) : (n.stubKids || 0);
+        if (rest && !q) note(a3, d3, rest + ' more sub-organisation' + (rest === 1 ? '' : 's') + ' aren’t included in this prototype.');
+      }
+    }
+    metaTree.forEach(function (n) { org(n, 0, null, [], []); });
+    if (!out.length) out.push('<tr><td colspan="4" class="empty">No organisations match “' + esc(state.mfilter) + '”.</td></tr>');
+    return out.join('');
+  }
+
+  function renderMeta() {
+    var steps = ['Main Details', 'Visual Identity', 'Organisation Rights', 'Permissions'].map(function (t, i) {
+      return '<li' + (i === 2 ? ' aria-current="step"' : '') + '><span class="dot">' + (i + 1) + '</span>' + t + '</li>';
+    }).join('');
+    return '<nav class="crumbs" aria-label="Breadcrumb"><ol><li>Meta Manager</li><li>Event folder</li><li aria-current="page">Manage</li></ol></nav>' +
+      '<div class="wiz-head"><h1>Manage</h1>' +
+      '<button type="button" class="btn btn-ghost" data-act="wiz" data-msg="Cancel works as it does today.">Cancel</button>' +
+      '<button type="button" class="btn btn-secondary" data-act="wiz" data-msg="Previous goes to Visual Identity, as today.">Previous</button>' +
+      '<button type="button" class="btn btn-secondary" data-act="wiz" data-msg="Next goes to Permissions, as today.">Next</button>' +
+      '<button type="button" class="btn btn-primary" data-act="wiz" data-msg="Save works as it does today.">Save</button></div>' +
+      '<ol class="stepper" aria-label="Steps">' + steps + '</ol>' +
+      '<div class="mtoolbar"><div class="search">' + I.search + '<label class="sr-only" for="mfilter">Search organisations</label><input id="mfilter" type="search" placeholder="Search organisations" value="' + esc(state.mfilter) + '" autocomplete="off"></div>' +
+      '<button type="button" class="btn btn-tertiary" data-act="wiz" data-msg="Export org tag rights works as it does today.">Export org tag rights</button>' +
+      '<button type="button" class="btn btn-tertiary" data-act="wiz" data-msg="Import org tag rights works as it does today.">Import org tag rights</button>' +
+      '<button type="button" class="btn btn-tertiary" data-act="mcollapse" data-fk="mcollapse">Collapse all</button>' +
+      '<button type="button" class="btn btn-primary" data-act="wiz" data-msg="Add organisation works as it does today.">' + I.plus + 'Add organisation</button></div>' +
+      '<div class="pathbar-wrap"><div class="pathbar" id="pathbar" hidden></div></div><div class="table-wrap"><table class="meta-table tree-table" role="treegrid" aria-label="Organisations with rights to this folder"><colgroup><col><col style="width:26%"><col style="width:180px"><col style="width:48px"></colgroup><thead><tr><th scope="col">Organisation</th><th scope="col">Description</th><th scope="col">Access</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead><tbody id="metaBody">' + metaRows() + '</tbody></table></div>';
+  }
+
+  /* ---------- Render ---------- */
+  function view() { var v = location.hash.slice(1); return pages[v] || v === 'brief' || v === 'meta' ? v : 'list'; }
+  function render() {
+    var fk = document.activeElement && document.activeElement.getAttribute('data-fk');
+    var v = view();
+    document.getElementById('page').innerHTML = v === 'list' ? renderList() : v === 'brief' ? document.getElementById('briefTpl').innerHTML : v === 'meta' ? renderMeta() : renderDetail(v);
+    document.querySelectorAll('.proto-bar [data-view]').forEach(function (a) {
+      if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    document.getElementById('notesList').innerHTML = notes[v].map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('');
+    document.title = (v === 'list' ? 'Active Companies' : v === 'brief' ? 'Brief' : v === 'meta' ? 'Meta Manager rights' : pages[v].title) + ' – Org Manager wireframes';
+    if (fk) { var el = document.querySelector('[data-fk="' + fk + '"]'); if (el) el.focus(); }
+    var f = document.getElementById('filter');
+    if (f) f.addEventListener('input', function () { state.filter = f.value; document.getElementById('treeBody').innerHTML = treeRows(); updatePathbar(); });
+    var mf = document.getElementById('mfilter');
+    if (mf) mf.addEventListener('input', function () { state.mfilter = mf.value; document.getElementById('metaBody').innerHTML = metaRows(); updatePathbar(); });
+    document.documentElement.style.setProperty('--stick', stickTop() + 'px');
+    hlParent = null;
+    updatePathbar();
+  }
+
+  function treeBody() { return document.getElementById('treeBody') || document.getElementById('metaBody'); }
+  function stickTop() { var pb = document.querySelector('.proto-bar'); return pb ? pb.getBoundingClientRect().bottom : 48; }
+  function updatePathbar() {
+    var bar = document.getElementById('pathbar'), body = treeBody();
+    if (!bar || !body) return;
+    var limit = stickTop() + 40;
+    var rows = body.querySelectorAll('tr[data-row-id]'), first = null;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].getBoundingClientRect().bottom > limit) { first = rows[i]; break; } }
+    var anc = first ? (first.getAttribute('data-anc') || '').split(',').filter(Boolean) : [];
+    var off = anc.filter(function (id) { var rr = body.querySelector('tr[data-row-id="' + id + '"]'); var k = rr && rr.getAttribute('data-kind'); return rr && (!k || k === 'org') && rr.getBoundingClientRect().top < limit; });
+    if (!off.length) { bar.hidden = true; return; }
+    bar.hidden = false;
+    bar.innerHTML = '<span class="pb-k">Inside</span>' + off.map(function (id) {
+      var rr = body.querySelector('tr[data-row-id="' + id + '"]');
+      return '<button type="button" class="pb-seg" data-act="pathgo" data-id="' + id + '">' + esc(rr.getAttribute('data-label')) + '</button>';
+    }).join('<span class="pb-sep" aria-hidden="true">/</span>');
+  }
+  function goToRow(id) {
+    var rr = treeBody().querySelector('tr[data-row-id="' + id + '"]');
+    if (!rr) return;
+    window.scrollTo({ top: rr.getBoundingClientRect().top + window.scrollY - stickTop() - 8 });
+    var f = rr.querySelector('.chev, .name-link, .acc-btn'); if (f) f.focus({ preventScroll: true });
+    updatePathbar();
+  }
+  var raf = 0;
+  window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; updatePathbar(); }); }, { passive: true });
+  window.addEventListener('resize', function () { document.documentElement.style.setProperty('--stick', stickTop() + 'px'); updatePathbar(); });
+
+  /* Highlight the guide that joins a row to its siblings */
+  var hlParent = null;
+  function setHl(pid) {
+    if (pid === hlParent) return;
+    document.querySelectorAll('.guide.hl').forEach(function (g) { g.classList.remove('hl'); });
+    hlParent = pid;
+    if (pid) document.querySelectorAll('.guide[data-anc="' + pid + '"]').forEach(function (g) { g.classList.add('hl'); });
+  }
+  document.addEventListener('mouseover', function (e) { var tr = e.target.closest && e.target.closest('tr[data-row-id]'); setHl(tr ? tr.getAttribute('data-parent') : null); });
+  document.addEventListener('focusin', function (e) { var tr = e.target.closest && e.target.closest('tr[data-row-id]'); setHl(tr ? tr.getAttribute('data-parent') : null); });
+
+  /* Tree keyboard: arrows move and open/close, as a treegrid */
+  document.addEventListener('keydown', function (e) {
+    if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].indexOf(e.key) < 0) return;
+    var tr = e.target.closest && e.target.closest('tr[data-row-id]');
+    if (!tr || e.target.tagName === 'INPUT') return;
+    var chev = tr.querySelector('.chev');
+    var focusRow = function (row) { if (!row) return; var f = row.querySelector('.chev, .name-link, .acc-btn, .del'); if (f) f.focus(); };
+    if (e.key === 'ArrowRight' && chev && chev.getAttribute('aria-expanded') === 'false') { e.preventDefault(); chev.click(); }
+    else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (chev && chev.getAttribute('aria-expanded') === 'true') chev.click();
+      else { var pid = tr.getAttribute('data-parent'); if (pid) focusRow(treeBody().querySelector('tr[data-row-id="' + pid + '"]')); }
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      var rows = Array.prototype.slice.call(treeBody().querySelectorAll('tr[data-row-id]'));
+      focusRow(rows[rows.indexOf(tr) + (e.key === 'ArrowDown' ? 1 : -1)]);
+    }
+  });
+
+  function toast(msg) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.getElementById('toasts').appendChild(t);
+    setTimeout(function () { t.remove(); }, 4000);
+  }
+
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-act]');
+    if (!b) return;
+    var a = b.getAttribute('data-act');
+    if (a === 'tree') { var id = b.getAttribute('data-id'); state.tree[id] = !state.tree[id]; document.getElementById('treeBody').innerHTML = treeRows(); var el = document.querySelector('[data-fk="tree:' + id + '"]'); if (el) el.focus(); updatePathbar(); return; }
+    if (a === 'ev') { var k = b.getAttribute('data-key'); state.open[k] = !state.open[k]; }
+    else if (a === 'tab') { state.tab[b.getAttribute('data-page')] = b.getAttribute('data-tab'); }
+    else if (a === 'chip') {
+      var list = ctxEvents[b.getAttribute('data-ctx')];
+      var e = list.filter(function (x) { return x.id === b.getAttribute('data-ev'); })[0];
+      var g = e.groups.filter(function (x) { return x.id === b.getAttribute('data-g'); })[0];
+      var t = g.tags[+b.getAttribute('data-i')]; t.sel = !t.sel;
+    }
+    else if (a === 'selonly') { var sk = b.getAttribute('data-key'); state.selOnly[sk] = !state.selOnly[sk]; }
+    else if (a === 'collapse') { var c = b.getAttribute('data-ctx'); Object.keys(state.open).forEach(function (x) { if (x.indexOf(c + ':') === 0) state.open[x] = false; }); }
+    else if (a === 'collapse-subs') { state.subOpen = {}; }
+    else if (a === 'sub') { var sid = b.getAttribute('data-id'); state.subOpen[sid] = !state.subOpen[sid]; }
+    else if (a === 'add') { toast('Add event opens as it does today.'); return; }
+    else if (a === 'wiz') { toast(b.getAttribute('data-msg')); return; }
+    else if (a === 'mtree') { var mid = b.getAttribute('data-id'); state.mopen[mid] = !state.mopen[mid]; }
+    else if (a === 'mtags') { var tid = b.getAttribute('data-id'); state.mtags[tid] = !state.mtags[tid]; }
+    else if (a === 'pathgo') { goToRow(b.getAttribute('data-id')); return; }
+    else if (a === 'mchip') { var mt = metaIndex[b.getAttribute('data-id')].tags[+b.getAttribute('data-i')]; mt.sel = !mt.sel; }
+    else if (a === 'mall') { metaIndex[b.getAttribute('data-id')].tags.forEach(function (t) { if (!t.none) t.sel = true; }); }
+    else if (a === 'mcollapse') { state.mx = {}; }
+    else if (a === 'mx') { var xk = b.getAttribute('data-key'); state.mx[xk] = !state.mx[xk]; }
+    else if (a === 'mdel') {
+      var mn = metaIndex[b.getAttribute('data-id')];
+      pendingDelete = { meta: true, id: mn.id, name: mn.name };
+      document.getElementById('confirmTitle').textContent = 'Delete ' + mn.name + '?';
+      document.getElementById('confirm').showModal();
+      return;
+    }
+    else if (a === 'del') {
+      var dctx = b.getAttribute('data-ctx'), did = b.getAttribute('data-id');
+      var de = ctxEvents[dctx].filter(function (x) { return x.id === did; })[0];
+      pendingDelete = { ctx: dctx, id: did, name: de.name, trigger: b.getAttribute('data-fk') };
+      document.getElementById('confirmTitle').textContent = 'Delete ' + de.name + '?';
+      document.getElementById('confirm').showModal();
+      return;
+    }
+    else return;
+    render();
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    var t = ev.target;
+    if (!t.classList || !t.classList.contains('tab')) return;
+    if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+    var all = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var i = all.indexOf(t) + (ev.key === 'ArrowRight' ? 1 : -1);
+    var next = all[(i + all.length) % all.length];
+    next.focus(); next.click();
+  });
+
+  var dlg = document.getElementById('confirm');
+  document.getElementById('confirmCancel').addEventListener('click', function () { dlg.close(); });
+  document.getElementById('confirmOk').addEventListener('click', function () {
+    if (pendingDelete && pendingDelete.meta) {
+      state.mdeleted[pendingDelete.id] = true;
+      toast('Deleted ' + pendingDelete.name + '.');
+    } else if (pendingDelete) {
+      state.deleted[pendingDelete.ctx + ':' + pendingDelete.id] = true;
+      state.open[pendingDelete.ctx + ':' + pendingDelete.id] = false;
+      toast('Deleted ' + pendingDelete.name + '.');
+    }
+    dlg.close(); pendingDelete = null; render();
+  });
+
+  /* Notes drawer */
+  var notesEl = document.getElementById('notes'), notesBtn = document.getElementById('notesBtn');
+  function setNotes(on) {
+    state.notes = on; notesEl.classList.toggle('open', on); notesBtn.setAttribute('aria-pressed', on);
+    if (on) document.getElementById('notesClose').focus();
+  }
+  notesBtn.addEventListener('click', function () { setNotes(!state.notes); });
+  document.getElementById('notesClose').addEventListener('click', function () { setNotes(false); notesBtn.focus(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.notes && !dlg.open) { setNotes(false); notesBtn.focus(); } });
+
+  /* Theme */
+  function applyTheme(t) {
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+    document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-theme-set') === t); });
+    try { localStorage.setItem('om-theme', t); } catch (e) {}
+  }
+  document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.addEventListener('click', function () { applyTheme(b.getAttribute('data-theme-set')); }); });
+  var saved = 'auto';
+  try { saved = localStorage.getItem('om-theme') || 'auto'; } catch (e) {}
+  applyTheme(saved);
+
+  window.addEventListener('hashchange', function () { render(); window.scrollTo(0, 0); });
+  render();
+})();
+</script>
+</body>
+</html>
